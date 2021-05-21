@@ -1,0 +1,23 @@
+{
+  "cSpell.words": [
+    "chatlog",
+    "datetime",
+    "dtos",
+    "kakao",
+    "kakaotalk",
+    "luxon",
+    "middlewares",
+    "nestjs",
+    "ornn",
+    "passcode",
+    "passcord",
+    "prebuild",
+    "puuid",
+    "typeorm",
+    "varchar"
+  ],
+  "cSpell.ignoreWords": [
+    "abcdefghijklmnopqrstuvwxyz",
+    "jongchan"
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es2017",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "paths": {
+      "@lib/db": [
+        "libs/database/src"
+      ],
+      "@lib/db/*": [
+        "libs/database/src/*"
+      ],
+      "@lib/kakao": [
+        "libs/kakao/src"
+      ],
+      "@lib/kakao/*": [
+        "libs/kakao/src/*"
+      ],
+      "@lib/discord": [
+        "libs/discord/src"
+      ],
+      "@lib/discord/*": [
+        "libs/discord/src/*"
+      ],
+      "@lib/utils": [
+        "libs/utils/src"
+      ],
+      "@lib/utils/*": [
+        "libs/utils/src/*"
+      ],
+      "@lib/redis": [
+        "libs/redis/src"
+      ],
+      "@lib/redis/*": [
+        "libs/redis/src/*"
+      ]
+    }
+  }
+}
