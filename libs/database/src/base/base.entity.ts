@@ -6,15 +6,11 @@ import {
 
 export class ModelBaseEntity {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: string;
 
-  @CreateDateColumn({
-    type: 'timestamp',
-  })
-  createdAt: Date;
+  @CreateDateColumn({ type: 'timestamp' })
+  createdAt!: number;
 
-  @UpdateDateColumn({
-    type: 'timestamp',
-  })
-  updatedAt: Date;
+  @UpdateDateColumn({ type: 'timestamp' })
+  updatedAt!: number;
 }

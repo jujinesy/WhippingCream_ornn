@@ -1,6 +1,6 @@
 import { ModelBaseEntity } from '@lib/db/base/base.entity';
 import { LENGTH } from '@lib/db/constants/length';
-import { Column, Entity, OneToMany } from 'typeorm';
+import { Column, Entity, OneToMany, OneToOne } from 'typeorm';
 import { GroupUserRelationsEntity } from './group-user-relations.entity';
 import { KakaoUserEntity } from './kakao/user.entity';
 import { RiotSummonerEntity } from './riot/summoner.entity';
@@ -21,13 +21,9 @@ export class UserEntity extends ModelBaseEntity {
   )
   groupRelations: GroupUserRelationsEntity[];
 
-  @OneToMany(() => RiotSummonerEntity, (summoner) => summoner.user, {
-    createForeignKeyConstraints: false,
-  })
+  @OneToMany(() => RiotSummonerEntity, (summoner) => summoner.user)
   summoners: RiotSummonerEntity[];
 
-  @OneToMany(() => KakaoUserEntity, (kakaoUser) => kakaoUser.user, {
-    createForeignKeyConstraints: false,
-  })
-  kakaoUsers: KakaoUserEntity[];
+  @OneToOne(() => KakaoUserEntity, (kakaoUser) => kakaoUser.user)
+  kakaoUser: KakaoUserEntity;
 }

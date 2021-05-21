@@ -20,22 +20,15 @@ export class GroupEntity extends ModelBaseEntity {
   })
   ratingUpdatedAt: Date;
 
-  @OneToOne(() => KakaoChannelEntity, (channel) => channel.group, {
-    createForeignKeyConstraints: false,
-  })
+  @OneToOne(() => KakaoChannelEntity, (channel) => channel.group)
   kakaoChannel: KakaoChannelEntity;
 
-  @OneToOne(() => DiscordGuildEntity, (guild) => guild.group, {
-    createForeignKeyConstraints: false,
-  })
+  @OneToOne(() => DiscordGuildEntity, (guild) => guild.group)
   discordGuild: DiscordGuildEntity;
 
   @OneToMany(
     () => GroupUserRelationsEntity,
     (userRelation) => userRelation.group,
-    {
-      createForeignKeyConstraints: false,
-    },
   )
   userRelations: GroupUserRelationsEntity[];
 }

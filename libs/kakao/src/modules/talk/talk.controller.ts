@@ -9,9 +9,7 @@ import {
   Logger,
   Put,
 } from '@nestjs/common';
-import { Cron } from '@nestjs/schedule';
 import { ApiTags } from '@nestjs/swagger';
-import * as dayjs from 'dayjs';
 import { encode } from 'js-base64';
 import {
   AsyncCommandResult,
@@ -63,37 +61,36 @@ export class KakaoTalkController extends ModelBaseController {
         if (!sender) return;
 
         if (data.text.charAt(0) === '/') {
-          try {
-            const { isHelp, command, args } = this.talkService.parseCommand(
-              data,
-              channel,
+          const { isHelp, command, args } = this.talkService.parseCommand(
+            data,
+            channel,
+          );
+          if (!command) {
+            return;
+          }
+          if (isHelp) {
+            channel.sendChat(
+              new ChatBuilder()
+                .append(new ReplyContent(data.chat))
+                .text(command ? command.helpMessage : '없는 명령어 입니다.')
+                .build(KnownChatType.REPLY),
             );
-
-            if (!command) {
-              return;
-            }
-
-            if (isHelp) {
-              channel.sendChat(
-                new ChatBuilder()
-                  .append(new ReplyContent(data.chat))
-                  .text(command ? command.helpMessage : '없는 명령어 입니다.')
-                  .build(KnownChatType.REPLY),
-              );
-            } else {
-              const verifiedArgs = this.talkService.validateCommandArguments(
+          } else {
+            let verifiedArgs;
+            try {
+              verifiedArgs = this.talkService.validateCommandArguments(
                 command,
                 args,
               );
               command.execute(data, channel, verifiedArgs);
+            } catch (err) {
+              channel.sendChat(
+                new ChatBuilder()
+                  .append(new ReplyContent(data.chat))
+                  .text(`⚠️ ${err.message}`)
+                  .build(KnownChatType.REPLY),
+              );
             }
-          } catch (err) {
-            channel.sendChat(
-              new ChatBuilder()
-                .append(new ReplyContent(data.chat))
-                .text(`⚠️ ${err.message}`)
-                .build(KnownChatType.REPLY),
-            );
           }
         }
 
@@ -468,11 +465,5 @@ export class KakaoTalkController extends ModelBaseController {
     });
 
     channel.sendChat(chatBuilder.build(KnownChatType.TEXT));
-  }
-
-  @Cron('0 */5 * * * *') // every 5 minutes
-  logonStatusMonitor() {
-    const { logon } = this.talkService.client;
-    Logger.log(`${dayjs().format('YYYY.MM.DD HH:mm:ss')} LogOn(${logon})`);
   }
 }
